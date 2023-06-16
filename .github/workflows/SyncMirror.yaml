@@ -29,7 +29,7 @@ jobs:
           $TargetBranch = "main"
           Write-Host "SourceBranch: $SourceBranch"
           Write-Host "TargetBranch: $TargetBranch"
-          git fetch --prune --unshallow
+          git fetch --prune
 
           $repo = "https://${{ secrets.GHTOKENWORKFLOW }}@github.com/microsoft/AlAppExtensions.git"
           git remote add mirror $repo
@@ -38,7 +38,7 @@ jobs:
           git checkout $TargetBranch
           git pull origin $TargetBranch
 
-          git fetch mirror --prune --unshallow
+          git fetch mirror --prune
           git pull mirror $SourceBranch
 
           git push
