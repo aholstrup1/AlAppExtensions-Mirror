@@ -17,19 +17,26 @@ jobs:
   GetBranches:
     runs-on: windows-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - name: Pull Changes from upstream
         id: Sync
         run : |
-          git config --global user.email "aholstrup@microsoft.com"
-          git config --global user.name "aholstrup1"
+          $SourceBranch = "main"
+          $TargetBranch = "main"
+          Write-Host "SourceBranch: $SourceBranch"
+          Write-Host "TargetBranch: $TargetBranch"
 
-          git clone https://github.com/aholstrup1/ALAppExtensions.git
-          cd ALAppExtensions
-          git remote add upstream https://github.com/microsoft/AlAppExtensions
+          $repo = "https://${{ secrets.GHTOKENWORKFLOW }}@github.com/microsoft/AlAppExtensions.git"
+          git remote add mirror $repo
+          git remote
 
-          git fetch
-          git fetch upstream
-          
-          git checkout origin main
-          git pull upstream aholstrup/main --allow-unrelated-histories
-          git push origin main
+          git fetch origin $TargetBranch
+          git checkout $TargetBranch
+          git pull origin $TargetBranch
+
+          git fetch mirror $SourceBranch
+          git pull mirror $SourceBranch
+
+          git push
