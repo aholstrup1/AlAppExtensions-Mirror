@@ -30,5 +30,5 @@ jobs:
           git fetch upstream
           
           git checkout origin main
-          git pull upstream main --allow-unrelated-histories
+          git pull upstream aholstrup/main --allow-unrelated-histories
           git push origin main
