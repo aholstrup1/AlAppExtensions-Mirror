@@ -24,9 +24,10 @@ jobs:
           git config --global user.name "aholstrup1"
 
           git clone https://github.com/aholstrup1/ALAppExtensions.git
+          cd ALAppExtensions
           git remote add upstream https://github.com/microsoft/AlAppExtensions
 
-          git fetch origin 
+          git fetch
           git fetch upstream
           
           git checkout origin main
