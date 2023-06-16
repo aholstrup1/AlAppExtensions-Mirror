@@ -25,8 +25,8 @@ jobs:
       - name: Pull Changes from upstream
         id: Sync
         run : |
-          $SourceBranch = "main"
-          $TargetBranch = "aholstrup/main"
+          $SourceBranch = "aholstrup/main"
+          $TargetBranch = "main"
           Write-Host "SourceBranch: $SourceBranch"
           Write-Host "TargetBranch: $TargetBranch"
           git fetch --prune
