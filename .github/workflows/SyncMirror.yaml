@@ -19,6 +19,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Pull Changes from upstream
         id: Sync
@@ -27,12 +29,12 @@ jobs:
           $TargetBranch = "main"
           Write-Host "SourceBranch: $SourceBranch"
           Write-Host "TargetBranch: $TargetBranch"
+          git fetch --prune --unshallow
 
           $repo = "https://${{ secrets.GHTOKENWORKFLOW }}@github.com/microsoft/AlAppExtensions.git"
           git remote add mirror $repo
           git remote
 
-          git fetch --prune --unshallow
           git checkout $TargetBranch
           git pull origin $TargetBranch
 
