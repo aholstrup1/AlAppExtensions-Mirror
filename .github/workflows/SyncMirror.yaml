@@ -32,11 +32,11 @@ jobs:
           git remote add mirror $repo
           git remote
 
-          git fetch origin $TargetBranch
+          git fetch --prune --unshallow
           git checkout $TargetBranch
           git pull origin $TargetBranch
 
-          git fetch mirror $SourceBranch
+          git fetch mirror --prune --unshallow
           git pull mirror $SourceBranch
 
           git push
