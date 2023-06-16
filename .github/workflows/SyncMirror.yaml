@@ -26,7 +26,7 @@ jobs:
         id: Sync
         run : |
           $SourceBranch = "main"
-          $TargetBranch = "main"
+          $TargetBranch = "aholstrup/main"
           Write-Host "SourceBranch: $SourceBranch"
           Write-Host "TargetBranch: $TargetBranch"
           git fetch --prune
