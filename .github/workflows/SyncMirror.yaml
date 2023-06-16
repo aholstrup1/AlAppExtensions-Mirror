@@ -1,0 +1,31 @@
+name: 'Sync Mirror'
+
+on:
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: write
+  packages: write
+
+defaults:
+  run:
+    shell: powershell
+
+
+jobs:
+  GetBranches:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Pull Changes from upstream
+        id: GetBranches
+        run : |
+          git config --global user.email "aholstrup@microsoft.com"
+          git config --global user.name "aholstrup1"
+          git remote add upstream https://github.com/microsoft/AlAppExtensions
+          git remote -v 
+          git pull upstream main
+          git push origin main
