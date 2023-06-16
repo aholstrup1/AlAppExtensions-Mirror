@@ -17,16 +17,16 @@ jobs:
   GetBranches:
     runs-on: windows-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
       - name: Pull Changes from upstream
-        id: GetBranches
+        id: Sync
         run : |
           git config --global user.email "aholstrup@microsoft.com"
           git config --global user.name "aholstrup1"
+
+          git clone https://github.com/aholstrup1/ALAppExtensions.git
           git remote add upstream https://github.com/microsoft/AlAppExtensions
-          git remote -v 
+
+          git fetch origin 
           git fetch upstream
           
           git checkout origin main
