@@ -43,4 +43,4 @@ jobs:
           git fetch mirror --prune
           git pull mirror $SourceBranch
 
-          git push upstream mirror
+          git push mirror $TargetBranch
