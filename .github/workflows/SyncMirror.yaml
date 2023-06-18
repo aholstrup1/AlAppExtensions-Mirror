@@ -21,33 +21,29 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
+          repository: aholstrup1/AlAppExtensions-Mirror
+          token: ${{ secrets.PAT }}
 
       - name: Pull Changes from upstream
         id: Sync
         run : |
-          $SourceBranch = "main"
-          $TargetBranch = "main"
+          $Branch = "main"
           git config --global user.email "aholstrup@microsoft.com"
           git config --global user.name "aholstrup1"
-          Write-Host "SourceBranch: $SourceBranch"
-          Write-Host "TargetBranch: $TargetBranch"
-          git fetch --prune
 
-          Write-Host "Adding mirror remote"
-          $repo = "https://aholstrup1:${{ secrets.PAT }}@github.com/aholstrup1/AlAppExtensions-Mirror.git"
-          git remote add mirror $repo
+          Write-Host "Adding upstream"
+          $repo = "https://github.com/aholstrup1/ALAppExtensions.git"
+          git remote add upstream $repo
           git remote
 
-          Write-Host "Checking out $TargetBranch"
+          git fetch --prune
+          git fetch upstream --prune
 
-          git checkout $TargetBranch
-          git pull origin $TargetBranch
+          Write-Host "Checking out $Branch"
 
-          Write-Host "Fetching $SourceBranch"
+          git checkout $Branch
+          git pull upstream $Branch
 
-          git fetch mirror --prune
-          git pull mirror $SourceBranch
+          Write-Host "Pushing $Branch to upstream"
 
-          Write-Host "Pushing $TargetBranch to mirror"
-
-          git push mirror $TargetBranch
+          git push upstream $Branch
