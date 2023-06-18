@@ -22,10 +22,10 @@ jobs:
           token: ${{ secrets.PAT }}
           fetch-depth: 0
 
-      - name: Pull Changes from upstream
+      - name: Push latest changes to mirror
         id: Sync
         run : |
-          Write-Host "Syncing commit ($ENV:GITHUB_SHA) by $ENV:GITHUB_ACTOR to $ENV:GITHUB_REF"
+          Write-Host "Syncing commit $ENV:GITHUB_SHA by $ENV:GITHUB_ACTOR to $ENV:GITHUB_REF"
           $Branch = $ENV:GITHUB_REF -replace "refs/heads/"
           $UpstreamRepo = "https://github.com/$ENV:GITHUB_REPOSITORY"
 
