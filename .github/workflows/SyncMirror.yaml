@@ -11,7 +11,7 @@ defaults:
 
 jobs:
   SyncRepository:
-    if: github.repository_name == 'aholstrup1/AlAppExtensions'
+    if: github.repository == 'aholstrup1/AlAppExtensions'
     runs-on: ubuntu-latest
     steps:
       - name: Logging
