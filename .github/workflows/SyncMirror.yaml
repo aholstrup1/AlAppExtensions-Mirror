@@ -28,13 +28,13 @@ jobs:
           $SourceBranch = "main"
           $TargetBranch = "main"
           git config --global user.email "aholstrup@microsoft.com"
-          git config --global user.name "aholstrup_microsoft"
+          git config --global user.name "aholstrup1"
           Write-Host "SourceBranch: $SourceBranch"
           Write-Host "TargetBranch: $TargetBranch"
           git fetch --prune
 
           Write-Host "Adding mirror remote"
-          $repo = "https://${{ secrets.PAT }}@github.com/aholstrup_microsoft/AlAppExtensions-Mirror.git"
+          $repo = "https://${{ secrets.PAT }}@github.com/aholstrup1/AlAppExtensions-Mirror.git"
           git remote add mirror $repo
           git remote
 
