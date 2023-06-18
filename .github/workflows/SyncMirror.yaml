@@ -14,13 +14,6 @@ jobs:
     if: github.repository == 'aholstrup1/AlAppExtensions'
     runs-on: ubuntu-latest
     steps:
-      - name: Logging
-        id: log
-        run : | 
-          Write-Host "GITHUB_REF: $ENV:GITHUB_REF"
-          Write-Host "GITHUB_SHA: $ENV:GITHUB_SHA"
-          Write-Host "GITHUB_REPOSITORY: $ENV:GITHUB_REPOSITORY"
-          Write-Host "GITHUB_ACTOR: $ENV:GITHUB_ACTOR"
       - name: Checkout
         uses: actions/checkout@v3
         with:
@@ -32,6 +25,7 @@ jobs:
       - name: Pull Changes from upstream
         id: Sync
         run : |
+          Write-Host "Syncing commit ($ENV:GITHUB_SHA) by $ENV:GITHUB_ACTOR to $ENV:GITHUB_REF"
           $Branch = $ENV:GITHUB_REF -replace "refs/heads/"
           $UpstreamRepo = "https://github.com/$ENV:GITHUB_REPOSITORY"
 
