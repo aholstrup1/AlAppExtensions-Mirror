@@ -28,7 +28,7 @@ jobs:
       - name: Pull Changes from upstream
         id: Sync
         run : |
-          $Branch = ${{ github.head_branch }}
+          $Branch = ${{ github.event.head_branch }}
 
           Write-Host "Adding upstream"
           $repo = "https://github.com/aholstrup1/ALAppExtensions.git"
