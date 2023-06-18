@@ -15,9 +15,17 @@ defaults:
 
 
 jobs:
-  GetBranches:
-    runs-on: windows-latest
+  SyncRepository:
+    runs-on: ubuntu-latest
     steps:
+      - name: Logging
+        id: log
+        run : | 
+          Write-Host "GITHUB_REF: $ENV:GITHUB_REF"
+          Write-Host "GITHUB_REFNAME: $ENV:GITHUB_REFNAME"
+          Write-Host "GITHUB_SHA: $ENV:GITHUB_SHA"
+          Write-Host "GITHUB_REPOSITORY: $ENV:GITHUB_REPOSITORY"
+          Write-Host "GITHUB_ACTOR: $ENV:GITHUB_ACTOR"
       - name: Checkout
         uses: actions/checkout@v3
         with:
@@ -28,7 +36,7 @@ jobs:
       - name: Pull Changes from upstream
         id: Sync
         run : |
-          $Branch = $ENV:GITHUB_REFNAME
+          $Branch = "main" #$ENV:GITHUB_REFNAME
 
           Write-Host "Adding upstream"
           $repo = "https://github.com/aholstrup1/ALAppExtensions.git"
