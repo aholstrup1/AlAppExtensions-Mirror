@@ -28,9 +28,7 @@ jobs:
       - name: Pull Changes from upstream
         id: Sync
         run : |
-          $Branch = ${{ github.ref_name }}
-          #git config --global user.email "aholstrup@microsoft.com"
-          #git config --global user.name "aholstrup1"
+          $Branch = ${{ github.head_branch }}
 
           Write-Host "Adding upstream"
           $repo = "https://github.com/aholstrup1/ALAppExtensions.git"
