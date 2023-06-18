@@ -46,4 +46,4 @@ jobs:
 
           Write-Host "Pushing $Branch to upstream"
 
-          git push upstream $Branch
+          git push origin $Branch
