@@ -22,11 +22,9 @@ jobs:
         id: log
         run : | 
           Write-Host "GITHUB_REF: $ENV:GITHUB_REF"
-          Write-Host "GITHUB_REFNAME: $ENV:GITHUB_REFNAME"
           Write-Host "GITHUB_SHA: $ENV:GITHUB_SHA"
           Write-Host "GITHUB_REPOSITORY: $ENV:GITHUB_REPOSITORY"
           Write-Host "GITHUB_ACTOR: $ENV:GITHUB_ACTOR"
-          Write-Host "GITHUB_REPOSITORY_URL: $ENV:GITHUB_REPOSITORY_URL"
       - name: Checkout
         uses: actions/checkout@v3
         with:
@@ -39,7 +37,7 @@ jobs:
         id: Sync
         run : |
           $Branch = $ENV:GITHUB_REF -replace "refs/heads/"
-          $UpstreamRepo = $ENV:GITHUB_REPOSITORY_URL
+          $UpstreamRepo = "https://github.com/$ENV:GITHUB_REPOSITORY"
 
           Write-Host "Adding upstream"
           git remote add upstream $UpstreamRepo
