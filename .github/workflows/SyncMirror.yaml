@@ -4,11 +4,6 @@ on:
   push:
     branches: [ 'main', 'release/*' ]
 
-permissions:
-  actions: read
-  contents: write
-  packages: write
-
 defaults:
   run:
     shell: pwsh
@@ -16,6 +11,7 @@ defaults:
 
 jobs:
   SyncRepository:
+    if: github.repository_name == 'aholstrup1/AlAppExtensions'
     runs-on: ubuntu-latest
     steps:
       - name: Logging
@@ -29,7 +25,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           ref: ${{ env.GITHUB_REF }}
-          repository: aholstrup1/AlAppExtensions-Mirror
+          repository: ${{ secrets.MIRRORREPONAME }}
           token: ${{ secrets.PAT }}
           fetch-depth: 0
 
