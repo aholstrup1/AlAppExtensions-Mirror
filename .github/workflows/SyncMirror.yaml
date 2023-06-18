@@ -34,7 +34,7 @@ jobs:
           git fetch --prune
 
           Write-Host "Adding mirror remote"
-          $repo = "https://${{ secrets.PAT }}@github.com/aholstrup1/AlAppExtensions-Mirror.git"
+          $repo = "https://aholstrup1:${{ secrets.PAT }}@github.com/aholstrup1/AlAppExtensions-Mirror.git"
           git remote add mirror $repo
           git remote
 
