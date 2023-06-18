@@ -33,14 +33,21 @@ jobs:
           Write-Host "TargetBranch: $TargetBranch"
           git fetch --prune
 
+          Write-Host "Adding mirror remote"
           $repo = "https://${{ secrets.PAT }}@github.com/aholstrup_microsoft/AlAppExtensions-Mirror.git"
           git remote add mirror $repo
           git remote
 
+          Write-Host "Checking out $TargetBranch"
+
           git checkout $TargetBranch
           git pull origin $TargetBranch
 
+          Write-Host "Fetching $SourceBranch"
+
           git fetch mirror --prune
           git pull mirror $SourceBranch
+
+          Write-Host "Pushing $TargetBranch to mirror"
 
           git push mirror $TargetBranch
