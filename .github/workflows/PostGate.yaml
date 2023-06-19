@@ -16,15 +16,18 @@ jobs:
     if: github.repository == 'aholstrup1/AlAppExtensions'
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ env.GITHUB_REF }}
+          fetch-depth: 0
+
      - name: Get Build Version
        id: GetBuildVersion
        env: 
         WORKFLOW_RUN_NUMBER: ${{ github.event.workflow_run.run_number}}
        run : |
-        Write-Host "Workspace: $env:GITHUB_WORKSPACE"
-        Write-Host "$(Get-ChildItem -Path $env:GITHUB_WORKSPACE)"
-        
-        Import-Module (Join-Path -Path $env:GITHUB_WORKSPACE -ChildPath "Build\Scripts\EnlistmentHelperFunctions.psm1" -Resolve)
+        Import-Module Build\Scripts\EnlistmentHelperFunctions.psm1
         $buildVersion = Get-BuildVersion -BuildNumber $ENV:WORKFLOW_RUN_NUMBER
         Add-Content -Path $env:GITHUB_OUTPUT -Value "BuildVersion=$buildVersion"
 
