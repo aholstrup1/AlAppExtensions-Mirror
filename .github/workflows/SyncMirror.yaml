@@ -37,3 +37,4 @@ jobs:
 
           Write-Host "Pushing $Branch to origin"
           git push origin $Branch
+          git push origin --tags
