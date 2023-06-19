@@ -17,57 +17,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
      - name: Push latest changes to mirror
-       id: CreateTag
+       id: GetBuildVersion
+       env: 
+        WORKFLOW_RUN_NUMBER: ${{ github.event.workflow_run.run_number}}
        run : |
-        # Print github context
-        Write-Host "GITHUB_CONTEXT: $ENV:GITHUB_CONTEXT"
+        Import-Module Build/Scripts/EnlistmentHelperFunctions.psm1
+        $buildVersion = Get-BuildVersion -BuildNumber $ENV:WORKFLOW_RUN_NUMBER
+        Add-Content -Path $env:GITHUB_OUTPUT -Value "BuildVersion=$buildVersion"
 
-        # Print github event
-        Write-Host "GITHUB_EVENT: $ENV:GITHUB_EVENT"
-
-        # Print github event payload
-        $ghEvent = Get-Content $env:GITHUB_EVENT_PATH -Encoding UTF8
-        Write-Host "GITHUB_EVENT_PAYLOAD: $ghEvent"
-
-
-     # TODO: What should the tag be? 
      - name: Create version tag
        uses: actions/github-script@v6
        with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            // Query all artifacts from the build workflow
-            const allArtifacts = await github.rest.actions.listWorkflowRunArtifacts({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              run_id: context.payload.workflow_run.id,
-            });
-
-            if(!allArtifacts) {
-              console.log(`Could not fetch artifacts from run ID ${context.payload.workflow_run.id}`)
-              return;
-            }
-
-            // Determine the build number, based on the apps artifact name
-            const appsArtifact = allArtifacts.data.artifacts.filter((artifact) => {
-              return artifact.name.match(/.*-Apps-.*/)
-            })[0];
-
-            if(!appsArtifact) {
-              console.log(`Could not find apps artifact from run ID ${context.payload.workflow_run.id}`)
-              return;
-            }
-
-            // The build number is after -Apps-
-            const buildNumber = appsArtifact.name.replace(/.*-Apps-/, "")
-            const tag = `refs/tags/builds/${buildNumber}`
-
-            console.log(`Creating tag: ${tag}`)
-
             github.rest.git.createRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              ref: tag,
+              ref: ${{ steps.GetBuildVersion.outputs.BuildVersion }},
               sha: context.sha
             });
   

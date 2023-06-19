@@ -210,4 +210,14 @@ function Install-PackageFromConfig
     return $packagePath
 }
 
+function Get-BuildVersion
+(
+    [Parameter(Mandatory=$true)]
+    [string] $BuildNumber
+) {
+    # Get repoversion
+    $repoVersion = Get-ConfigValue -Key "repoVersion" -ConfigType AL-Go
+    return "$($repoVersion).$BuildNumber"
+}
+
 Export-ModuleMember -Function *-*
