@@ -16,12 +16,15 @@ jobs:
     if: github.repository == 'aholstrup1/AlAppExtensions'
     runs-on: ubuntu-latest
     steps:
-     - name: Push latest changes to mirror
+     - name: Get Build Version
        id: GetBuildVersion
        env: 
         WORKFLOW_RUN_NUMBER: ${{ github.event.workflow_run.run_number}}
        run : |
-        Import-Module ".\Build\Scripts\EnlistmentHelperFunctions.psm1"
+        Write-Host "Workspace: $env:GITHUB_WORKSPACE"
+        Write-Host "$(Get-ChildItem -Path $env:GITHUB_WORKSPACE)"
+        
+        Import-Module (Join-Path -Path $env:GITHUB_WORKSPACE -ChildPath "Build\Scripts\EnlistmentHelperFunctions.psm1" -Resolve)
         $buildVersion = Get-BuildVersion -BuildNumber $ENV:WORKFLOW_RUN_NUMBER
         Add-Content -Path $env:GITHUB_OUTPUT -Value "BuildVersion=$buildVersion"
 
