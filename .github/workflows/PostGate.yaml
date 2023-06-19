@@ -17,8 +17,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
      - name: Push latest changes to mirror
-      id: Sync
-      run : |
+       id: CreateTag
+       run : |
         # Print github context
         Write-Host "GITHUB_CONTEXT: $ENV:GITHUB_CONTEXT"
 
@@ -30,10 +30,10 @@ jobs:
         Write-Host "GITHUB_EVENT_PAYLOAD: $ghEvent"
 
 
-      # TODO: What should the tag be? 
-      - name: Create version tag
-        uses: actions/github-script@v6
-        with:
+     # TODO: What should the tag be? 
+     - name: Create version tag
+       uses: actions/github-script@v6
+       with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             // Query all artifacts from the build workflow
