@@ -16,9 +16,9 @@ jobs:
     if: github.repository == 'aholstrup1/AlAppExtensions'
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
+     - name: Checkout
+       uses: actions/checkout@v3
+       with:
           ref: ${{ env.GITHUB_REF }}
           fetch-depth: 0
 
