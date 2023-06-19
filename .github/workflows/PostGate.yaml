@@ -3,7 +3,7 @@ name: 'Create tag and sync to mirror'
 on:
   workflow_run:
     workflows: [' CI/CD']
-    types: [in_progress]
+    types: [requested]
     branches: ['main', 'release/*']
 
 defaults:
