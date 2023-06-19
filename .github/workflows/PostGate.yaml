@@ -31,17 +31,23 @@ jobs:
         Write-Host "Path exists: $pathExists"
         Import-Module "$ENV:GITHUB_WORKSPACE\Build\Scripts\EnlistmentHelperFunctions.psm1"
         $buildVersion = Get-BuildVersion -BuildNumber $ENV:WORKFLOW_RUN_NUMBER
+        Write-Host "BuildVersion=$buildVersion"
         Add-Content -Path $env:GITHUB_OUTPUT -Value "BuildVersion=$buildVersion"
 
      - name: Create version tag
        uses: actions/github-script@v6
+       env:
+        BuildVersion: ${{ steps.GetBuildVersion.outputs.BuildVersion }}
        with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
+            const {BuildVersion} = process.env
+            # print build version
+            console.log(BuildVersion)
             github.rest.git.createRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              ref: ${{ steps.GetBuildVersion.outputs.BuildVersion }},
+              ref: ${BuildVersion},
               sha: context.sha
             });
   
