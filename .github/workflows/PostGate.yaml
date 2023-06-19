@@ -27,7 +27,9 @@ jobs:
        env: 
         WORKFLOW_RUN_NUMBER: ${{ github.event.workflow_run.run_number}}
        run : |
-        Import-Module Build\Scripts\EnlistmentHelperFunctions.psm1
+        $pathExists = Test-Path "$ENV:GITHUB_WORKSPACE\Build\Scripts\EnlistmentHelperFunctions.psm1"
+        Write-Host "Path exists: $pathExists"
+        Import-Module "$ENV:GITHUB_WORKSPACE\Build\Scripts\EnlistmentHelperFunctions.psm1"
         $buildVersion = Get-BuildVersion -BuildNumber $ENV:WORKFLOW_RUN_NUMBER
         Add-Content -Path $env:GITHUB_OUTPUT -Value "BuildVersion=$buildVersion"
 
