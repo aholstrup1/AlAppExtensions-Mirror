@@ -12,11 +12,11 @@ defaults:
 
 
 jobs:
-  env:
-    HEAD_BRANCH: ${{ github.event.workflow_run.head_branch }}
   CreateTag:
     if: github.repository == 'aholstrup1/AlAppExtensions'
     runs-on: ubuntu-latest
+    env:
+      HEAD_BRANCH: ${{ github.event.workflow_run.head_branch }}
     steps:
      - name: Checkout
        uses: actions/checkout@v3
@@ -40,6 +40,8 @@ jobs:
     needs: [ CreateTag ]
     if: needs.CreateTag.result == 'Success' && github.repository == 'aholstrup1/AlAppExtensions'
     runs-on: ubuntu-latest
+    env:
+      HEAD_BRANCH: ${{ github.event.workflow_run.head_branch }}
     steps:
     - name: Checkout mirror
       uses: actions/checkout@v3
