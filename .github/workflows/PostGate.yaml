@@ -48,4 +48,15 @@ jobs:
       id: Sync
       run : |
         $Branch = $ENV:HEAD_BRANCH -replace "refs/heads/"
-        .\Build\Scripts\PullUpstreamChanges.ps1 -Branch $Branch -RepositoryUrl "https://github.com/$ENV:GITHUB_REPOSITORY"
+        $RepositoryUrl = "https://github.com/$ENV:GITHUB_REPOSITORY"
+        
+        Write-Host "Adding remote $RepositoryUrl as upstream"
+        git remote add upstream $RepositoryUrl
+        git fetch --all --prune
+
+        Write-Host "Pulling $Branch from upstream"
+        git pull upstream $Branch
+
+        Write-Host "Pushing $Branch to origin"
+        git push origin $Branch
+        git push origin --tags
