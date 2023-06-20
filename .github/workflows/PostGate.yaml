@@ -16,12 +16,12 @@ jobs:
     if: github.repository == 'aholstrup1/AlAppExtensions'
     runs-on: ubuntu-latest
     env:
-      HEAD_BRANCH: ${{ github.event.workflow_run.head_branch }}
+      HEAD_COMMIT: ${{ github.event.workflow_run.head_commit.id }}
     steps:
      - name: Checkout
        uses: actions/checkout@v3
        with:
-          ref: ${{ env.HEAD_BRANCH }}
+          ref: ${{ env.HEAD_COMMIT }}
           fetch-depth: 0
 
      - name: Set build tag
