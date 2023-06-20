@@ -28,10 +28,7 @@ jobs:
        id: GetBuildVersion
        env: 
         WORKFLOW_RUN_NUMBER: ${{ github.event.workflow_run.run_number}}
-       run : |
-        $pathExists = Test-Path -Path .\Build\Scripts\Set-BuildTag.ps1
-        Write-Host "Path exists: $pathExists"
-        Build\Scripts\Set-BuildTag.ps1 -BuildVersion $ENV:WORKFLOW_RUN_NUMBER
+       run : Build\Scripts\Set-BuildTag.ps1 -BuildNumber $ENV:WORKFLOW_RUN_NUMBER
 
   SyncRepository:
     needs: [ CreateTag ]
