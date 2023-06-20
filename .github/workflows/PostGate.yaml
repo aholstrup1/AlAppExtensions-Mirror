@@ -24,17 +24,11 @@ jobs:
           ref: ${{ env.HEAD_BRANCH }}
           fetch-depth: 0
 
-     - name: Get Build Version
+     - name: Set build tag
        id: GetBuildVersion
        env: 
         WORKFLOW_RUN_NUMBER: ${{ github.event.workflow_run.run_number}}
-       run : |
-        $pathExists = Test-Path "$ENV:GITHUB_WORKSPACE\Build\Scripts\EnlistmentHelperFunctions.psm1"
-        Write-Host "Path exists: $pathExists"
-        Import-Module "$ENV:GITHUB_WORKSPACE\Build\Scripts\EnlistmentHelperFunctions.psm1"
-        $buildVersion = Get-BuildVersion -BuildNumber $ENV:WORKFLOW_RUN_NUMBER
-        git tag $buildVersion
-        git push origin $ENV:HEAD_BRANCH --tags
+       run : Build\Scripts\Set-BuildTag.ps1 -BuildVersion $ENV:WORKFLOW_RUN_NUMBER
 
   SyncRepository:
     needs: [ CreateTag ]
