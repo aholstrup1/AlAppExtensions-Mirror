@@ -28,7 +28,7 @@ jobs:
        id: GetBuildVersion
        env: 
         WORKFLOW_RUN_NUMBER: ${{ github.event.workflow_run.run_number}}
-       run : Build\Scripts\Set-BuildTag.ps1 -BuildNumber $ENV:WORKFLOW_RUN_NUMBER
+       run : .\Build\Scripts\Set-BuildTag.ps1 -BuildNumber $ENV:WORKFLOW_RUN_NUMBER
 
   SyncRepository:
     needs: [ CreateTag ]
