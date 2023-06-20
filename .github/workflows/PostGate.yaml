@@ -12,6 +12,8 @@ defaults:
 
 
 jobs:
+  env:
+    HEAD_BRANCH: ${{ github.event.workflow_run.head_branch }}
   CreateTag:
     if: github.repository == 'aholstrup1/AlAppExtensions'
     runs-on: ubuntu-latest
@@ -19,7 +21,7 @@ jobs:
      - name: Checkout
        uses: actions/checkout@v3
        with:
-          ref: ${{ env.GITHUB_REF }}
+          ref: ${{ env.HEAD_BRANCH }}
           fetch-depth: 0
 
      - name: Get Build Version
@@ -31,8 +33,6 @@ jobs:
         Write-Host "Path exists: $pathExists"
         Import-Module "$ENV:GITHUB_WORKSPACE\Build\Scripts\EnlistmentHelperFunctions.psm1"
         $buildVersion = Get-BuildVersion -BuildNumber $ENV:WORKFLOW_RUN_NUMBER
-        Write-Host "BuildVersion=$buildVersion"
-        Add-Content -Path $env:GITHUB_OUTPUT -Value "BuildVersion=$buildVersion"
 
      - name: Create version tag
        uses: actions/github-script@v6
@@ -50,7 +50,7 @@ jobs:
               ref: ${BuildVersion},
               sha: context.sha
             });
-  
+
   SyncRepository:
     needs: [ CreateTag ]
     if: needs.CreateTag.result == 'Success' && github.repository == 'aholstrup1/AlAppExtensions'
@@ -59,7 +59,7 @@ jobs:
     - name: Checkout mirror
       uses: actions/checkout@v3
       with:
-        ref: ${{ env.GITHUB_REF }}
+        ref: ${{ env.HEAD_BRANCH }}
         repository: ${{ secrets.MIRRORREPONAME }}
         token: ${{ secrets.SYNCREPOSITORYTOKEN }}
         fetch-depth: 0
@@ -67,8 +67,8 @@ jobs:
     - name: Push latest changes to mirror
       id: Sync
       run : |
-          Write-Host "Syncing commit $ENV:GITHUB_SHA by $ENV:GITHUB_ACTOR to $ENV:GITHUB_REF"
-          $Branch = $ENV:GITHUB_REF -replace "refs/heads/"
+          Write-Host "Syncing commit $ENV:GITHUB_SHA by $ENV:GITHUB_ACTOR to $ENV:HEAD_BRANCH"
+          $Branch = $ENV:HEAD_BRANCH -replace "refs/heads/"
           $UpstreamRepo = "https://github.com/$ENV:GITHUB_REPOSITORY"
 
           Write-Host "Adding upstream"
