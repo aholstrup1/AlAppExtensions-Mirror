@@ -10,7 +10,6 @@ defaults:
   run:
     shell: pwsh
 
-
 jobs:
   CreateTag:
     if: github.repository == 'aholstrup1/AlAppExtensions'
@@ -48,16 +47,5 @@ jobs:
     - name: Push latest changes to mirror
       id: Sync
       run : |
-          $Branch = $ENV:HEAD_BRANCH -replace "refs/heads/"
-          Write-Host "Syncing branch $Branch to mirror"
-
-          Write-Host "Adding upstream"
-          $UpstreamRepo = "https://github.com/$ENV:GITHUB_REPOSITORY"
-          git remote add upstream $UpstreamRepo
-
-          git fetch --all --prune
-          git pull upstream $Branch
-
-          Write-Host "Pushing $Branch to origin"
-          git push origin $Branch
-          git push origin --tags
+        $Branch = $ENV:HEAD_BRANCH -replace "refs/heads/"
+        .\Build\Scripts\PullUpstreamChanges.ps1 -Branch $Branch -RepositoryUrl "https://github.com/$ENV:GITHUB_REPOSITORY"
