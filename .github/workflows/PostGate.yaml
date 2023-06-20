@@ -35,7 +35,7 @@ jobs:
     if: needs.CreateTag.result == 'Success' && github.repository == 'aholstrup1/AlAppExtensions'
     runs-on: ubuntu-latest
     env:
-      BRANCH: ${{ github.event.workflow_run.head_branch }}
+      HEAD_BRANCH: ${{ github.event.workflow_run.head_branch }}
       HEAD_COMMIT: ${{ github.event.workflow_run.head_commit.id }}
     steps:
     - name: Checkout mirror
