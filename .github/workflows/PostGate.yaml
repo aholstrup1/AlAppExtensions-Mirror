@@ -21,7 +21,8 @@ jobs:
        id: log
        run: | 
         # Log the event payload
-        echo "Event payload: ${{ toJson(github.event) }}"
+        $payload = Get-Content $env:GITHUB_EVENT_PATH
+        Write-Host "$payload"
      - name: Checkout
        uses: actions/checkout@v3
        with:
