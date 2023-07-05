@@ -5,7 +5,7 @@
 
 codeunit 1817 "Advanced Settings Impl."
 {
-    Access = Internal;
+    Access = Internal;  
     InherentEntitlements = X;
     InherentPermissions = X;
 
