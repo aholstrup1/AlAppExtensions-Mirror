@@ -8,5 +8,5 @@ permissionset 1817 "Advanced Settings - Objects"
     Access = Internal;
     Assignable = false;
 
-    Permissions = Page "Advanced Settings" = X;
+    Permissions = Page "Advanced Settings" = X;   
 }
