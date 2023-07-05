@@ -16,5 +16,6 @@ codeunit 9202 "Advanced Settings"
     [IntegrationEvent(false, false)]
     internal procedure OnBeforeOpenGeneralSetupExperience(var PageID: Integer; var Handled: Boolean)
     begin
+
     end;
 }
