@@ -3,7 +3,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 // ------------------------------------------------------------------------------------------------
 
-codeunit 1817 "Advanced Settings Impl."
+codeunit 1817 "Advanced Settings Impl."  
 {
     Access = Internal;  
     InherentEntitlements = X;
