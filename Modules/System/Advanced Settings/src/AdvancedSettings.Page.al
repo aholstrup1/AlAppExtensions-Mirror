@@ -9,7 +9,7 @@ page 9202 "Advanced Settings"
     PageType = NavigatePage;
     ApplicationArea = All;
     UsageCategory = Administration;
-    Caption = 'Advanced Settings';
+    Caption = 'Advanced Settings';  
 
     layout
     {
