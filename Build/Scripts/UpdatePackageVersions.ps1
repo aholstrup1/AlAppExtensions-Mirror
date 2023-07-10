@@ -3,7 +3,7 @@ Param(
     [string]$TargetBranch,
     [Parameter(Mandatory = $true)]
     [string]$Actor
-) #TEST
+) #TEST 
 
 # BC Container Helper is needed to fetch the latest version of one of the packages
 Install-Module -Name BcContainerHelper -Force 
